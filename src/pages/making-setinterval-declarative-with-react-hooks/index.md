@@ -8,7 +8,7 @@ spoiler: How I learned to stop worrying and love refs.
 
 По [словам](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) Райана Флоренс (Ryan Florence):
 
->У меня было много людей, указывающих на setInterval с хуками, как какое-то яйцо на лице React’а
+>У меня было много людей, указывающих на setInterval с хуками, как на какое-то яйцо на лице React’а
 
 Хотя, я думаю, что это точка зрения этих людей. Эта проблема * является * запутанной на первый взгляд
 
@@ -21,14 +21,21 @@ spoiler: How I learned to stop worrying and love refs.
 -----
 
 **Disclaimer: this post focuses on a _pathological case_. Even if an API simplifies a hundred use cases, the discussion will always focus on the one that got harder.**
+**Предупреждение: этот пост фокусируется на _патологическом случае_. Даже если API упрощает сотни вариантов использования, обсуждение всегда будет сосредоточено на том, что стало сложнее.**
 
 If you’re new to Hooks and don’t understand what the fuss is about, check out [this introduction](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) and the [documentation](https://reactjs.org/docs/hooks-intro.html) instead. This post assumes that you worked with Hooks for more than an hour.
+
+Если вы новичок в хуках и не понимаете, о чем идет речь, прочитайте [это введение](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) и [документацию](https://ru.reactjs.org/docs/hooks-intro.html). Этот пост предполагает, что вы работали с хуками более часа.
 
 ---
 
 ## Just Show Me the Code
 
 Without further ado, here’s a counter that increments every second:
+
+## Просто покажи мне код
+
+Без лишних слов покажем счетчик, который увеличивается каждую секунду:
 
 ```jsx{6-9}
 import React, { useState, useEffect, useRef } from 'react';
@@ -37,7 +44,7 @@ function Counter() {
   let [count, setCount] = useState(0);
 
   useInterval(() => {
-    // Your custom logic here
+    // Ваша логика здесь
     setCount(count + 1);
   }, 1000);
 
@@ -45,9 +52,9 @@ function Counter() {
 }
 ```
 
-*(Here’s a [CodeSandbox demo](https://codesandbox.io/s/105x531vkq).)*
+*(Здесь [демо на CodeSandbox](https://codesandbox.io/s/105x531vkq).)*
 
-This `useInterval` isn’t a built-in React Hook; it’s a [custom Hook](https://reactjs.org/docs/hooks-custom.html) that I wrote:
+Этот `useInterval` не является встроенным хуком React; это [пользовательский хук](https://ru.reactjs.org/docs/hooks-custom.html), который я написал:
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
@@ -55,12 +62,12 @@ import React, { useState, useEffect, useRef } from 'react';
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // Remember the latest callback.
+  // Запомнить последний колбэк.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
-  // Set up the interval.
+  // Настройка интервала.
   useEffect(() => {
     function tick() {
       savedCallback.current();
@@ -73,13 +80,13 @@ function useInterval(callback, delay) {
 }
 ```
 
-*(Here’s a [CodeSandbox demo](https://codesandbox.io/s/105x531vkq) in case you missed it earlier.)*
+*(Здесь [демо на CodeSandbox](https://codesandbox.io/s/105x531vkq) на случай, если вы пропустили его раньше.)*
 
-**My `useInterval` Hook sets up an interval and clears it after unmounting.** It’s a combo of `setInterval` and `clearInterval` tied to the component lifecycle.
+**Мой хук `useInterval` устанавливает интервал и очищает его после размонтирования.** Это сочетание `setInterval` и `clearInterval` связано с жизненным циклом компонентов.
 
-Feel free to copy paste it in your project or put it on npm.
+Не стесняйтесь копировать и вставлять код в свой проект или поместить его на npm.
 
-**If you don’t care how this works, you can stop reading now! The rest of the blog post is for folks who are ready to take a deep dive into React Hooks.**
+**Если вам все равно, как все это работает, вы можете прекратить чтение! Остальная часть поста в блоге предназначена для людей, которые готовы глубоко погрузиться в React Хуки.**
 
 ---
 
