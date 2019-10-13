@@ -20,7 +20,6 @@ spoiler: How I learned to stop worrying and love refs.
 
 -----
 
-**Disclaimer: this post focuses on a _pathological case_. Even if an API simplifies a hundred use cases, the discussion will always focus on the one that got harder.**
 **Предупреждение: этот пост фокусируется на _патологическом случае_. Даже если API упрощает сотни вариантов использования, обсуждение всегда будет сосредоточено на том, что стало сложнее.**
 
 If you’re new to Hooks and don’t understand what the fuss is about, check out [this introduction](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) and the [documentation](https://reactjs.org/docs/hooks-intro.html) instead. This post assumes that you worked with Hooks for more than an hour.
