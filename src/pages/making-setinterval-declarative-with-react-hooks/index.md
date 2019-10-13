@@ -29,10 +29,6 @@ If you’re new to Hooks and don’t understand what the fuss is about, check ou
 
 ---
 
-## Just Show Me the Code
-
-Without further ado, here’s a counter that increments every second:
-
 ## Просто покажи мне код
 
 Без лишних слов покажем счетчик, который увеличивается каждую секунду:
@@ -98,12 +94,19 @@ I know what you’re thinking:
 
 **I thought this too but I changed my mind, and I’m going to change yours.** Before explaining why this code makes sense, I want to show off what it can do.
 
+## Подожди, что это?! 🤔
+
+Я знаю, о чем ты думаешь:
+
+>Дэн, этот код не имеет никакого смысла. Что случилось с "Простым JavaScript"? Допустим, что React прыгнул на акулу с хуками!
+
+**Я тоже так думал, но передумал, и я собираюсь изменить твое мнение.** Прежде чем объяснить, почему этот код имеет смысл, я хочу показать, что он может сделать.
+
 ---
 
-## Why `useInterval()` Is a Better API
+## Почему `useInterval()` является более лучшим API
 
-
-To remind you, my `useInterval` Hook accepts a function and a delay:
+Напомню, мой хук `useInterval` принимает функцию и задержку:
 
 ```jsx
   useInterval(() => {
@@ -111,7 +114,7 @@ To remind you, my `useInterval` Hook accepts a function and a delay:
   }, 1000);
 ```
 
-This looks a lot like `setInterval`:
+Это очень похоже на `setInterval`:
 
 ```jsx
   setInterval(() => {
