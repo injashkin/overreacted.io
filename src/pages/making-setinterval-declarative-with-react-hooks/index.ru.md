@@ -85,14 +85,6 @@ function useInterval(callback, delay) {
 
 ---
 
-## Wait What?! 🤔
-
-I know what you’re thinking:
-
->Dan, this code doesn’t make any sense. What happened to “Just JavaScript”? Admit that React has jumped the shark with Hooks!
-
-**I thought this too but I changed my mind, and I’m going to change yours.** Before explaining why this code makes sense, I want to show off what it can do.
-
 ## Подожди, что это?! 🤔
 
 Я знаю, о чем ты думаешь:
