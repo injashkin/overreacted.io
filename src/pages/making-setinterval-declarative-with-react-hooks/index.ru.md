@@ -8,23 +8,21 @@ spoiler: How I learned to stop worrying and love refs.
 
 По [словам](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) Райана Флоренс (Ryan Florence):
 
->У меня было много людей, указывающих на setInterval с хуками, как на какое-то яйцо на лице React’а
+>Мне многие указывали на то, что setInterval с хуками, это как какое-то бельмо на глазу React’а
 
-Хотя, я думаю, что это точка зрения этих людей. Эта проблема * является * запутанной на первый взгляд
+Хотя, я думаю, что это точка зрения этих людей. Эта проблема только на первый взгляд является запутанной
 
-И я также пришел к пониманию, что это не недостаток хуков, а несоответствия между [моделью программирования React](/react-as-a-ui-runtime/) и `setInterval`. Хуки, будучи ближе к модели программирования React, чем классы, делают это несоответствие более заметным.
+Я также пришел к пониманию, что это не недостаток хуков, а несоответствия между [моделью программирования React](/react-as-a-ui-runtime/) и `setInterval`. Хуки более ближе к модели программирования React чем классы, что делает это несоответствие более заметным.
 
-**Есть способ заставить их работать очень хорошо вместе, хотя это немного неинтуитивно.**
+**Есть способ заставить их работать вместе и при этом очень хорошо, хотя этот способ является не совсем интуитивным.**
 
-В этом посте мы рассмотрим, _как_ сделать так, чтобы интервалы и хуки хорошо иполнялись вместе, _почему_ это решение имеет смысл, и какие *новые* возможности он может дать вам.
+В этом посте мы рассмотрим, _как_ сделать так, чтобы интервалы и хуки хорошо иполнялись вместе, _почему_ это решение имеет смысл, и какие *новые* возможности это может дать вам.
 
 -----
 
 **Предупреждение: этот пост фокусируется на _патологическом случае_. Даже если API упрощает сотни вариантов использования, обсуждение всегда будет сосредоточено на том, что стало сложнее.**
 
-If you’re new to Hooks and don’t understand what the fuss is about, check out [this introduction](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) and the [documentation](https://reactjs.org/docs/hooks-intro.html) instead. This post assumes that you worked with Hooks for more than an hour.
-
-Если вы новичок в хуках и не понимаете, о чем идет речь, прочитайте [это введение](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) и [документацию](https://ru.reactjs.org/docs/hooks-intro.html). Этот пост предполагает, что вы работали с хуками более часа.
+Если вы новичок в хуках и не понимаете, о чем идет речь, прочитайте [это введение](https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889) и [документацию](https://ru.reactjs.org/docs/hooks-intro.html). Этот пост предполагает, что вы работали с хуками более чем час.
 
 ---
 
@@ -47,9 +45,9 @@ function Counter() {
 }
 ```
 
-*(Здесь [демо на CodeSandbox](https://codesandbox.io/s/105x531vkq).)*
+*([Демо на CodeSandbox](https://codesandbox.io/s/105x531vkq).)*
 
-Этот `useInterval` не является встроенным хуком React; это [пользовательский хук](https://ru.reactjs.org/docs/hooks-custom.html), который я написал:
+Этот `useInterval` не является встроенным хуком React; это [пользовательский хук](https://ru.reactjs.org/docs/hooks-custom.html), который написал я:
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
@@ -57,12 +55,12 @@ import React, { useState, useEffect, useRef } from 'react';
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // Запомнить последний колбэк.
+  // Запоминает последний колбэк.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
-  // Настройка интервала.
+  // Настраивает интервал.
   useEffect(() => {
     function tick() {
       savedCallback.current();
@@ -75,7 +73,7 @@ function useInterval(callback, delay) {
 }
 ```
 
-*(Здесь [демо на CodeSandbox](https://codesandbox.io/s/105x531vkq) на случай, если вы пропустили его раньше.)*
+*([Демо на CodeSandbox](https://codesandbox.io/s/105x531vkq) на случай, если вы пропустили его раньше.)*
 
 **Мой хук `useInterval` устанавливает интервал и очищает его после размонтирования.** Это сочетание `setInterval` и `clearInterval` связано с жизненным циклом компонентов.
 
@@ -106,7 +104,7 @@ function useInterval(callback, delay) {
 ```
 
 Это очень похоже на `setInterval`:
-
+95
 ```jsx
   setInterval(() => {
     // ...
