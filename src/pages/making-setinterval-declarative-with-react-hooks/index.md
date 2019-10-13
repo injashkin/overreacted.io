@@ -4,7 +4,7 @@ date: '2019-02-04'
 spoiler: How I learned to stop worrying and love refs.
 ---
 
-If you played with [React Hooks](https://reactjs.org/docs/hooks-intro.html) for more than a few hours, you probably ran into an intriguing problem: using `setInterval` just [doesn’t work](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) as you’d expect.
+Если вы играли с [React Hooks](https://ru.reactjs.org/docs/hooks-intro.html) более нескольких часов, вы, вероятно, столкнулись с интересной проблемой: используя `setInterval` just [doesn’t work](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) as you’d expect.
 
 In the [words](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) of Ryan Florence:
 
