@@ -104,7 +104,7 @@ function useInterval(callback, delay) {
 ```
 
 Это очень похоже на `setInterval`:
-95
+
 ```jsx
   setInterval(() => {
     // ...
