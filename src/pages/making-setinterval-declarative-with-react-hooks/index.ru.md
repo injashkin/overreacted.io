@@ -4,7 +4,7 @@ date: '2019-02-04'
 spoiler: How I learned to stop worrying and love refs.
 ---
 
-Если вы пользовались [React Хуками](https://ru.reactjs.org/docs/hooks-intro.html) хотя бы нескольких часов, вы, вероятно, столкнулись с интересной проблемой: использование `setInterval` просто [не работает](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) так, как можно было бы ожидать.
+Если вы пользовались [React Хуками](https://ru.reactjs.org/docs/hooks-intro.html) хотя бы нескольких часов, вы, вероятно, столкнулись с интересной проблемой: `setInterval` [не работает](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) так, как хотелось бы.
 
 По [словам](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) Райана Флоренс (Ryan Florence):
 
