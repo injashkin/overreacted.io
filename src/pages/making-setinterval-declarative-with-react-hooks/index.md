@@ -4,19 +4,19 @@ date: '2019-02-04'
 spoiler: How I learned to stop worrying and love refs.
 ---
 
-If you played with [React Hooks](https://reactjs.org/docs/hooks-intro.html) for more than a few hours, you probably ran into an intriguing problem: using `setInterval` just [doesn’t work](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) as you’d expect.
+Если вы пользовались [React Хуками](https://ru.reactjs.org/docs/hooks-intro.html) хотя бы нескольких часов, вы, вероятно, столкнулись с интересной проблемой: использование `setInterval` просто [не работает](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) так, как можно было бы ожидать.
 
-In the [words](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) of Ryan Florence:
+По [словам](https://mobile.twitter.com/ryanflorence/status/1088606583637061634) Райана Флоренс (Ryan Florence):
 
->I’ve had a lot of people point to setInterval with hooks as some sort of egg on React’s face
+>У меня было много людей, указывающих на setInterval с хуками, как какое-то яйцо на лице React’а
 
-Honestly, I think these people have a point. It *is* confusing at first.
+Хотя, я думаю, что это точка зрения этих людей. Эта проблема * является * запутанной на первый взгляд
 
-But I’ve also come to see it not as a flaw of Hooks but as a mismatch between the [React programming model](/react-as-a-ui-runtime/) and `setInterval`. Hooks, being closer to the React programming model than classes, make that mismatch more prominent.
+И я также пришел к пониманию, что это не недостаток хуков, а несоответствия между [моделью программирования React](/react-as-a-ui-runtime/) и `setInterval`. Хуки, будучи ближе к модели программирования React, чем классы, делают это несоответствие более заметным.
 
-**There _is_ a way to get them working together very well but it’s a bit unintuitive.**
+**Есть способ заставить их работать очень хорошо вместе, хотя это немного неинтуитивно.**
 
-In this post, we’ll look at _how_ to make intervals and Hooks play well together, _why_ this solution makes sense, and which *new* capabilities it can give you.
+В этом посте мы рассмотрим, _как_ сделать так, чтобы интервалы и хуки хорошо иполнялись вместе, _почему_ это решение имеет смысл, и какие *новые* возможности он может дать вам.
 
 -----
 
