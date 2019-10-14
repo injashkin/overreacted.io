@@ -111,21 +111,21 @@ function useInterval(callback, delay) {
   }, 1000);
 ```
 
-**So why not just use `setInterval` directly?**
+**Так почему бы просто не использовать `setInterval` напрямую?**
 
-This may not be obvious at first, but the difference between the `setInterval` you know and my `useInterval` Hook is that **its arguments are “dynamic”**.
+Поначалу это может быть не очевидным, но разница между “setInterval”, который вы знаете, и моим хуком "use Interval" заключается в том, что **его аргументы являются "динамическими"**.
 
-I’ll illustrate this point with a concrete example.
+Я проиллюстрирую этот момент на конкретном примере.
 
 ---
 
-Let’s say we want the interval delay to be adjustable:
+Допустим, мы хотим, чтобы задержка интервала была регулируема:
 
-![Counter with an input that adjusts the interval delay](./counter_delay.gif)
+![Счетчик с полем ввода, которое регулирует задержку интервала](./ counter_delay.gif)
 
-While you wouldn’t necessarily control the delay with an *input*, adjusting it dynamically can be useful — for example, to poll for some AJAX updates less often while the user has switched to a different tab.
+Хотя вы не обязательно контролируете задержку с помощью *input*, динамическая настройка может быть полезна — например, для опроса некоторых обновлений AJAX, реже, когда пользователь переключился на другую вкладку.
 
-So how would you do this with `setInterval` in a class? I ended up with this:
+Как бы вы сделали это используя `setInterval` в классе? У меня получилось вот что:
 
 ```jsx{7-26}
 class Counter extends React.Component {
@@ -170,11 +170,11 @@ class Counter extends React.Component {
 }
 ```
 
-*(Here’s a [CodeSandbox demo](https://codesandbox.io/s/mz20m600mp).)*
+*([Демо на CodeSandbox](https://codesandbox.io/s/mz20m600mp).)*
 
-This is not too bad!
+Не так уж и плохо!
 
-What’s the Hook version looking like?
+Как же выглядит версия с Хуком?
 
 <font size="50">🥁🥁🥁</font>
 
@@ -201,11 +201,11 @@ function Counter() {
 }
 ```
 
-*(Here’s a [CodeSandbox demo](https://codesandbox.io/s/329jy81rlm).)*
+*([Демо на CodeSandbox](https://codesandbox.io/s/329jy81rlm).)*
 
-Yeah, *that’s all it takes*.
+Да, *это то, что нужно*.
 
-Unlike the class version, there is no complexity gap for “upgrading” the `useInterval` Hook example to have a dynamically adjusted delay:
+В отличие от классовой версии, чтобы иметь динамически настроенную задержку, здесь нет никакого сложного промежутка для "обновления" хука `useInterval`:
 
 ```jsx{4,9}
   // Constant delay
@@ -219,11 +219,11 @@ Unlike the class version, there is no complexity gap for “upgrading” the `us
   }, delay);
 ```
 
-When `useInterval` Hook sees a different delay, it sets up the interval again.
+Когда хук `useInterval` видит другую задержку, он снова настраивает интервал.
 
-**Instead of writing code to *set* and *clear* the interval, I can *declare* an interval with a particular delay — and our `useInterval` Hook makes it happen.**
+** Вместо того, чтобы писать код для *set* и *clear* интервала, я могу *объявить* интервал с определенной задержкой — и наш хук `useInterval` делает это.**
 
-What if I want to temporarily *pause* my interval? I can do this with state too:
+Что, если я хочу временно *приостановить* свой интервал? Я могу тоже самое сделать с состоянием:
 
 ```jsx{6}
   const [delay, setDelay] = useState(1000);
@@ -234,21 +234,21 @@ What if I want to temporarily *pause* my interval? I can do this with state too:
   }, isRunning ? delay : null);
 ```
 
-*(Here is a [demo](https://codesandbox.io/s/l240mp2pm7)!)*
+*([Демо](https://codesandbox.io/s/l240mp2pm7)!)*
 
-This is what gets me excited about Hooks and React all over again. We can wrap the existing imperative APIs and create declarative APIs expressing our intent more closely. Just like with rendering, we can **describe the process at all points in time simultaneously** instead of carefully issuing commands to manipulate it.
-
----
-
-I hope by this you’re sold on `useInterval()` Hook being a nicer API — at least when we’re doing it from a component.
-
-**But why is using `setInterval()` and `clearInterval()` annoying with Hooks?** Let’s go back to our counter example and try to implement it manually.
+Это то, что заставляет меня волноваться о Хуках и React снова и снова. Мы можем обернуть существующие императивные API и создать декларативные API, более точно выражающие наши намерения. Так же, как и при рендеринге, мы можем **описывать процесс во все моменты времени одновременно** вместо того, чтобы тщательно выдавать команды для управления им.
 
 ---
 
-## First Attempt
+Надеюсь, вы это реализовали на хуке `useInterval()`, который является более приятным API — по крайней мере, когда мы делаем это из компонента.
 
-I’ll start with a simple example that just renders the initial state:
+**Но почему же использование `setInterval()` и `clearInterval()` с хуками раздражает?** Давайте вернемся к нашему примеру со счетчиком и попробуем реализовать его вручную.
+
+---
+
+## Первая Попытка
+
+Я начну с простого примера, который просто отображает начальное состояние:
 
 ```jsx
 function Counter() {
@@ -257,7 +257,7 @@ function Counter() {
 }
 ```
 
-Now I want an interval that increments it every second. It’s a [side effect that needs cleanup](https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup) so I’m going to `useEffect()` and return the cleanup function:
+Теперь мне нужен интервал, который увеличивает это состояние каждую секунду. Это [побочный эффект, которому нужен сброс](https://ru.reactjs.org/docs/hooks-effect.html#effects-with-cleanup) поэтому я собираюсь в `useEffect()` вернуть функцию сброса:
 
 ```jsx{4-9}
 function Counter() {
@@ -274,17 +274,17 @@ function Counter() {
 }
 ```
 
-*(See the [CodeSandbox demo](https://codesandbox.io/s/7wlxk1k87j).)*
+*([Демо на CodeSandbox](https://codesandbox.io/s/7wlxk1k87j).)*
 
-Seems easy enough? This kind of works.
+Довольно просто?
 
-**However, this code has a strange behavior.**
+**Однако, этот код имеет странное поведение.**
 
-React by default re-applies effects after every render. This is intentional and helps avoid [a whole class of bugs](https://reactjs.org/docs/hooks-effect.html#explanation-why-effects-run-on-each-update) that are present in React class components.
+React по умолчанию повторно применяет эффекты после каждого рендеринга. Это делается намеренно и помогает избежать [целого класса ошибок](https://ru.reactjs.org/docs/hooks-effect.html#explanation-why-effects-run-on-each-update), которые присутствуют в классовых компонентах React.
 
-This is usually good because many subscription APIs can happily remove the old and add a new listener at any time. However, `setInterval` isn’t one of them. When we run `clearInterval` and `setInterval`, their timing shifts. If we re-render and re-apply effects too often, the interval never gets a chance to fire!
+Это обычно хорошо, потому что многие API подписок могут с радостью удалить старый и добавить новый прослушиватель в любое время. Однако `setInterval` не является одним из них. Когда мы запускаем `clearInterval` и `setInterval` их синхронизация сдвигается. Если мы повторно рендерим и слишком часто повторно применяем эффекты, интервал никогда не получит шанс выстрелить!
 
-We can see the bug by re-rendering our component within a *smaller* interval:
+Мы можем увидеть ошибку, если сделаем повторный рендер нашего компонента с *меньшим* интервалом:
 
 ```jsx
 setInterval(() => {
@@ -295,13 +295,13 @@ setInterval(() => {
 }, 100);
 ```
 
-*(See a [demo](https://codesandbox.io/s/9j86r218y4) of this bug.)*
+*([Демо](https://codesandbox.io/s/9j86r218y4) этого бага.)*
 
 ---
 
-## Second Attempt
+## Вторая попытка
 
-You might know that `useEffect()` lets us [*opt out*](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) of re-applying effects. You can specify a dependency array as a second argument, and React will only re-run the effect if something in that array changes:
+Возможно, вы знаете, что `useEffect()` позволяет нам [*отказаться*](https://ru.reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) от повторного применения эффектов. Вы можете указать массив зависимостей в качестве второго аргумента, и React будет повторно запускать эффект только в том случае, если что-то в этом массиве изменится:
 
 ```jsx{3}
 useEffect(() => {
@@ -309,11 +309,11 @@ useEffect(() => {
 }, [count]);
 ```
 
-When we want to *only* run the effect on mount and cleanup on unmount, we can pass an empty `[]` array of dependencies.
+Когда мы хотим *только* запустить эффект при монтировании и сбросить его при размонтировании, мы можем передать пустой массив зависимостей `[]`.
 
-However, this is a common source of mistakes if you’re not very familiar with JavaScript closures. We’re going to make this mistake right now! (We’re also building a [lint rule](https://github.com/facebook/react/pull/14636) to surface these bugs early but it’s not quite ready yet.)
+Однако это распространенный источник ошибок, если вы не очень знакомы с JavaScript замыканиями. Мы собираемся сделать эту ошибку прямо сейчас! (Мы также создадим [линтер правило](https://github.com/facebook/react/pull/14636) чтобы выявить эти ошибки зараннее, но он еще не готов.)
 
-In the first attempt, our problem was that re-running the effects caused our timer to get cleared too early. We can try to fix it by never re-running them:
+В первой попытке наша проблема была в том, что повторный запуск эффектов привел к слишком ранней очистке таймера. Мы можем попытаться исправить это, никогда не перезапуская их:
 
 ```jsx{9}
 function Counter() {
@@ -330,19 +330,19 @@ function Counter() {
 }
 ```
 
-However, now our counter updates to 1 and stays there. ([See the bug in action](https://codesandbox.io/s/jj0mk6y683).)
+Однако теперь наш счетчик обновляется до 1 и остается в таком состоянии. ([Смотрите ошибку в действии](https://codesandbox.io/s/jj0mk6y683).)
 
-What happened?!
+Что случилось?!
 
-**The problem is that `useEffect` captures the `count` from the first render.** It is equal to `0`. We never re-apply the effect so the closure in `setInterval` always references the `count` from the first render, and `count + 1` is always `1`. Oops!
+**Проблема в том, что `useEffect` захватывает `count` с первого рендеринга.** Он равен `0`. Мы никогда ни применим эффект повторно, поэтому замыкание в `setInterval` всегда ссылается на `count` с первого рендеринга, а `count + 1` всегда является `1`. Упс!
 
-**I can hear your teeth grinding. Hooks are so annoying, right?**
+**Я слышу, как ты скрежещешь зубами. Хуки так раздражают, правда?**
 
-[One way](https://codesandbox.io/s/j379jxrzjy) to fix it is to replace `setCount(count + 1)` with the “updater” form like `setCount(c => c + 1)`. It can always read fresh state for that variable. But this doesn’t help you read the fresh props, for example.
+[Один из способов](https://codesandbox.io/s/j379jxrzjy) исправить это - заменить `setCount(count + 1)` на "обновляемую" форму  `setCount(c => c + 1)`. Оно всегда может прочитать новое состояние для этой переменной. Но, например, это не поможет вам прочитать свежий пропс.
 
-[Another fix](https://codesandbox.io/s/00o9o95jyv) is to [`useReducer()`](https://reactjs.org/docs/hooks-reference.html#usereducer). This approach gives you more flexibility. Inside the reducer, you have the access both to current state and fresh props. The `dispatch` function itself never changes so you can pump data into it from any closure. One limitation of `useReducer()` is that you can’t yet emit side effects in it. (However, you could return new state — triggering some effect.)
+[[Другой способ исправления](https://code sandbox.io/s/00o9o95jyv) - это [`useReducer()`](https://ru.reactjs.org/docs/hooks-reference.html#usereducer). Этот подход дает вам больше гибкости. Внутри редюсера у вас есть доступ как к текущему состоянию, так и к новым пропсам. Функция `dispatch` сама никогда не меняется, поэтому вы можете заслать данные в нее из любого замыкания. Одним из ограничений `useReducer()` является то, что вы не можете генерировать в нем побочные эффекты. (Однако вы можете вернуть новое состояние, вызвав некоторый эффект.)
 
-**But why is it getting so convoluted?**
+**Но почему это становится таким запутанным?**
 
 ---
 
