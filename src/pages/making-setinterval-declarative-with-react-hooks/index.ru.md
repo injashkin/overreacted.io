@@ -1,7 +1,7 @@
 ---
-title: Making setInterval Declarative with React Hooks
+title: Создание декларативного setInterval с помощью React хуков
 date: '2019-02-04'
-spoiler: How I learned to stop worrying and love refs.
+spoiler: Как я научился не волноваться и любить рефы.
 ---
 
 Если вы пользовались [React Хуками](https://ru.reactjs.org/docs/hooks-intro.html) хотя бы нескольких часов, вы, вероятно, столкнулись с интересной проблемой: `setInterval` [не работает](https://stackoverflow.com/questions/53024496/state-not-updating-when-using-react-state-hook-within-setinterval) так, как хотелось бы.
